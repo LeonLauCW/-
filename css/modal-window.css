@@ -1,0 +1,39 @@
+.modal {
+  	position: absolute;
+  	z-index: 1000;
+  	padding: 50px;
+/*  	background-color: #ED7E71;*/
+}
+
+img{
+  	display: inline-block;
+	width: 95%; 
+	max-height: 95%;
+  	margin: 15px 0 15px 0;
+} 
+
+.modal-view{
+  	background-color: #ED7E71;
+  	text-align: center;
+  	clear: both;
+  	padding: 5px;
+  	border: 10px solid #e2e2e2;
+}
+
+.modal-close {
+  	cursor: pointer;
+}
+
+button.modal-close {
+  	background-color: #ed8e6c;
+  	color: #ffffff;
+  	border: none;
+  	border-radius: 4px;
+  	margin: 10px auto auto auto;
+  	float: right;
+	width: 50px;
+}
+
+button.modal-close:hover {
+	background-color: #ed612f;
+}

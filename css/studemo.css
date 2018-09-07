@@ -1,0 +1,212 @@
+html,body{
+	height:100%;
+	width:100%;
+	margin:0;
+	font-family:"微软雅黑";
+}
+
+#allmap{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+/*	float:right;*/
+	position: absolute;
+/*	为什么这个是关键？*/
+}
+
+#nodelist{
+	width:20%;
+	max-height: 100%;
+	position: fixed;
+	margin: 0px auto auto 0px;
+	overflow: visible;
+}
+
+#nodelist ul{
+	margin-top: 15px;
+}
+
+#nodelist ul li{
+	margin:5px auto auto 10px;	
+	z-index:1;
+/*	box-shadow: 8px 8px 4px #888888;*/
+}
+
+.btnlist{
+	margin:5px auto auto 35px;
+}
+
+button{
+	font-weight:500;
+	font-size: 16px;
+	width: 25%;
+	z-index: 1;
+	left:0;
+	color:#444;
+	margin:10px auto auto 10px;
+	border:none;
+	border-radius: 4px;
+/*	box-shadow: 8px 8px 4px #888888;*/
+}
+
+button:hover{
+	background-color:#ED7E71;
+	color:aliceblue;
+}
+
+#reminder{
+	width:20%;
+	text-align: center;
+	color:crimson;
+	font-size: 12px;
+	font-weight: bold;
+	margin:auto;
+}
+
+.invisible{
+	display: none;
+}
+
+/*
+div ul li{
+	width:60%;
+	height:20px;
+	margin:1px auto auto 20px;
+	background-color:brown;
+	color:aliceblue;
+	list-style: none;
+	text-align: center;
+	font-weight:700;
+}
+*/
+
+ul{
+	counter-reset: li;
+	list-style: none;
+	*list-style: decimal;
+	font: 15px 'trebuchet MS', 'lucida sans';
+	padding: 0;
+	margin-bottom: 4em;
+	text-shadow: 0 1px 0 rgba(255,255,255,.5);
+	font-weight:700;
+	width:80%;
+	margin:auto auto auto 35px;
+}
+
+
+/* -------------------------------------- */	
+
+.rectangle-list a{
+	position: relative;
+	display: block;
+	padding: .4em .4em .4em .8em;
+	*padding: .4em;
+	margin: .5em 0 .5em 2.5em;
+	background: #ddd;
+	color: #444;
+	text-decoration: none;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;	
+}
+
+.rectangle-list a:hover{
+	background: #eee;
+}	
+
+.rectangle-list a:before{
+	content: counter(li);
+	counter-increment: li;
+	position: absolute;	
+	left: -2.5em;
+	top: 50%;
+	margin-top: -1em;
+	background: #fa8072;
+	height: 2em;
+	width: 2em;
+	line-height: 2em;
+	text-align: center;
+	font-weight: bold;
+}
+			
+.rectangle-list a:after{
+	position: absolute;	
+	content: '';
+	border: .5em solid transparent;
+	left: -1em;
+	top: 50%;
+	margin-top: -.5em;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;				
+}
+
+.rectangle-list a:hover:after{
+	left: -.5em;
+	border-left-color: #fa8072;				
+}
+
+
+
+	
+/*
+.rounded-list a{
+	position: relative;
+	display: block;
+	padding: .4em .4em .4em 2em;
+	*padding: .4em;
+	margin: .5em 0;
+	background: #ddd;
+	color: #444;
+	text-decoration: none;
+	-moz-border-radius: .3em;
+	-webkit-border-radius: .3em;
+	border-radius: .3em;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;	
+}
+
+.rounded-list a:hover{
+	background: #eee;
+}
+
+.rounded-list a:hover:before{
+	-moz-transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	transform: rotate(360deg);	
+}
+
+.rounded-list a:before{
+	content: counter(li);
+	counter-increment: li;
+	position: absolute;	
+	left: -1.3em;
+	top: 50%;
+	margin-top: -1.3em;
+	background: #87ceeb;
+	height: 2em;
+	width: 2em;
+	line-height: 2em;
+	border: .3em solid #F6F4F1;
+	text-align: center;
+	font-weight: bold;
+	-moz-border-radius: 2em;
+	-webkit-border-radius: 2em;
+	border-radius: 2em;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+}
+*/
