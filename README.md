@@ -1,0 +1,1 @@
+# STU-school-project
