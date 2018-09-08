@@ -17,8 +17,8 @@ html,body{
 #nodelist{
 	width:20%;
 	max-height: 100%;
-	position: fixed;
-	margin: 0px auto auto 0px;
+	position: absolute;
+	margin: 0px 80% auto 0px;
 	overflow: visible;
 }
 
@@ -27,6 +27,24 @@ html,body{
 }
 
 #nodelist ul li{
+	margin:5px auto auto 10px;	
+	z-index:1;
+/*	box-shadow: 8px 8px 4px #888888;*/
+}
+
+#resultlist{
+	width:20%;
+	max-height: 100%;
+	position: absolute;
+	margin: 0px 0px auto 80%;
+	overflow: visible;
+}
+
+#resultlist ul{
+	margin-top: 15px;
+}
+
+#resultlist ul li{
 	margin:5px auto auto 10px;	
 	z-index:1;
 /*	box-shadow: 8px 8px 4px #888888;*/
@@ -60,6 +78,15 @@ button.control:hover{
 	font-size: 12px;
 	font-weight: bold;
 	margin:auto;
+}
+
+#resultTitle{
+	width:25%;
+	text-align: center;
+	color:currentColor;
+	font-size: 20px;
+	font-weight: bold;
+	margin:10px auto;
 }
 
 .invisible{
@@ -149,16 +176,12 @@ ul{
 	border-left-color: #fa8072;				
 }
 
-
-
-	
-/*
 .rounded-list a{
 	position: relative;
 	display: block;
 	padding: .4em .4em .4em 2em;
 	*padding: .4em;
-	margin: .5em 0;
+	margin: .5em 0;			
 	background: #ddd;
 	color: #444;
 	text-decoration: none;
@@ -196,7 +219,7 @@ ul{
 	height: 2em;
 	width: 2em;
 	line-height: 2em;
-	border: .3em solid #F6F4F1;
+	border: .3em solid #fff;
 	text-align: center;
 	font-weight: bold;
 	-moz-border-radius: 2em;
@@ -208,4 +231,3 @@ ul{
 	-o-transition: all .3s ease-out;
 	transition: all .3s ease-out;
 }
-*/

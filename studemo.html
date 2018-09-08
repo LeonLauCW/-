@@ -12,12 +12,16 @@
 	<div id="allmap"></div>
 	<div id="nodelist">
 		<div class="btnlist">
-			<button id="reset" class="control">归位</button>
-			<button id="clear" class="control">清空</button>
-			<button id="generate" class="control">生成</button>
+			<button id="reset" class="control">RESET</button>
+			<button id="clear" class="control">CLEAR</button>
+			<button id="run" class="control">RUN</button>
 		</div>
 		<ul class="rectangle-list"></ul>
 		<p id="reminder"></p>
+	</div>
+	<div id="resultlist">
+		<p id="resultTitle"></p>
+		<ul class="rounded-list"></ul>
 	</div>
 </body>
 <script src="js/jquery-1.11.0.js"></script>
@@ -26,8 +30,12 @@
 <script>
 $(function(){
 	
-	var jsonData = {};
+	var result = new Array();		//存放结果的数组
+	var jsonData = {};		//JSONd对象，存储JSON中载入的数据
 	var $reminder = $('#reminder');		//因为要经常用到，所以放入变量中
+	var $resultTitle = $('#resultTitle');
+	var markers = new Array();		//存放标注
+	
 	var center = new qq.maps.LatLng(23.4130, 116.635);
 	//腾讯地图初始化
 	stumap = new qq.maps.Map(document.getElementById("allmap"),{
@@ -36,6 +44,10 @@ $(function(){
 		minZoom:15,
 		panControl:false,
 		zoomControl:false,
+	});
+	
+	var walking = new qq.maps.DrivingService({		//路线规划对象
+		map: stumap
 	});
 	
 	//添加一个点
@@ -83,6 +95,7 @@ $(function(){
 				$reminder.text('');
 				$('<li><a href="">' + label.getContent() + '</a><span class="invisible">' + this.getTitle() + '</span></li>').appendTo('#nodelist ul').hide().fadeIn(300);
 			}
+			//marker.setIcon 设置图片标注样式
 		});
 		
 		qq.maps.event.addListener(label, 'click', function(){		//点击标注展示照片
@@ -90,6 +103,7 @@ $(function(){
 		});
 		
 		label.setVisible(true);
+		return marker;
 	}
 	
 	//照片展示
@@ -103,10 +117,36 @@ $(function(){
 		});
 	}
 	
+	//动画
+	function animation(type, el){
+		if(type === 1){
+			$(el).animate({		//向右
+				opacity:0.0,
+				paddingLeft:'+=200'
+			}, 500, function(){			
+				$('ul.rectangle-list').html('').animate({
+					opacity:1,
+					paddingLeft:'-=200'
+				},1);
+			});
+		}else{
+			$(el).animate({		//向下
+				opacity:0.0,
+				paddingTop:'+=200'
+			}, 500, function(){			
+				$('ul.rounded-list').html('').animate({
+					opacity:1,
+					paddingTop:'-=200'
+				},1);
+			});
+		}
+	}
+	
 	//添加删除事件+事件代理
 	$('ul.rectangle-list').on('click', 'li a', function(e){
 		e.preventDefault();
 		$reminder.text('');
+		//$(this).next().text为makers数组的下标，然后用makers[i].setIcon变回原来的样式
 		$(this).animate({
 			opacity: 0.0,
 		}, 300, function(){ //加了easing参数就运行不了
@@ -122,24 +162,46 @@ $(function(){
 			stumap.setCenter(center);
 			stumap.setZoom(16);
 		}else if(id === 'clear'){		//点击清空
-			$('ul.rectangle-list').animate({		//动画
-				opacity:0.0,
-				paddingLeft:'+=200'
-			}, 500, function(){			
-				$('ul.rectangle-list').html('').animate({
-					opacity:1,
-					paddingLeft:'-=200'
-				},1);
-			});
+			//$('ul.rectagle-list>li>a').each(function(){});这个代码可以将用户选中的元素全部找出来并对每一个元素执行一个函数
+			//在函数里面使用$(this).next().text()找到对应的标注下标，再用markers[i].setIcon将样式改变回来
+			animation(1, 'ul.rectangle-list');
 			$reminder.text('');		//清空reminder
-		}else if(id === 'generate'){		//点击生成
+			
+			if($('ul.rounded-list').is(':has(li)')){		//如果有生成结果则删除
+				animation(2, 'ul.rounded-list');
+				walking.clear();	//随便猜猜居然真有这个函数
+				$resultTitle.text('');
+			}
+		}else if(id === 'run'){		//点击生成
 			var selected = new Array();
 			$('ul.rectangle-list>li>a').each(function(index){
 				selected.push(parseInt($(this).next().text()));		//传入的是整数
 			});
-			$('ul.rectangle-list').html('');
+			animation(1, 'ul.rectangle-list');
 			$reminder.text('');
 			//selected是一个数组对象 其length属性为数组的长度
+			
+			result = selected;
+			//通过算法接口返回一个数组之后，依次把路线画出来
+			for(var i = 0; i < result.length-1; i++){
+				$('<li><a href="">' + jsonData[result[i]].name + '-' + jsonData[result[i+1]].name + '</a>' + '<span class="invisible">' + i + '</span>' + '</li>')
+					.appendTo('#resultlist ul')
+					.hide()
+					.fadeIn(300);
+				$('#resultlist').on('click', 'li a', function(e){
+					e.preventDefault();
+					var n = parseInt($(this).next().text());
+					var p1 = new qq.maps.LatLng(jsonData[result[n]].lat, jsonData[result[n]].lng);
+					var p2 = new qq.maps.LatLng(jsonData[result[n+1]].lat, jsonData[result[n+1]].lng);
+					walking.search(p1, p2);
+					$resultTitle.text('STEP ' + (n+1));
+				});
+			}
+			
+			var p1 = new qq.maps.LatLng(jsonData[result[0]].lat, jsonData[result[0]].lng);
+			var p2 = new qq.maps.LatLng(jsonData[result[1]].lat, jsonData[result[1]].lng);
+			walking.search(p1, p2);
+			$resultTitle.text('RESULT');
 		}
 	});
 	
@@ -156,7 +218,7 @@ $(function(){
 	.done(function(data){
 		jsonData = data;
 		for(var i = 0; i < jsonData.length; i ++){
-			addMarker(jsonData[i].lng, jsonData[i].lat, jsonData[i].name, i);
+			markers.push(addMarker(jsonData[i].lng, jsonData[i].lat, jsonData[i].name, i));
 		}
 	}).fail(function(){
 		alert("找不到数据！");
@@ -164,12 +226,7 @@ $(function(){
 	
 	
 	//test
-//	openView('STU平面图');
 	
-//	qq.maps.event.addListener(stumap, 'click', function(event) {
-//        alert('"lng": ' + event.latLng.getLng() +
-//        ',' + '"lat": ' + event.latLng.getLat());
-//    });
 });
 </script>
 </html>
