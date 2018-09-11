@@ -57,10 +57,13 @@ html,body{
 button.control{
 	font-weight:500;
 	font-size: 16px;
-	width: 25%;
+	/*枫枫制造 修改了一下width的值*/
+	width: 65px;
+	height: 28px;
 	z-index: 1;
 	left:0;
-	color:#444;
+	color: #444;
+	background-color: #DDD;
 	margin:10px auto auto 10px;
 	border:none;
 	border-radius: 4px;
@@ -86,7 +89,7 @@ button.control:hover{
 	color:currentColor;
 	font-size: 20px;
 	font-weight: bold;
-	margin:10px auto;
+	margin:20px auto auto auto;
 }
 
 .invisible{
@@ -230,4 +233,57 @@ ul{
 	-ms-transition: all .3s ease-out;
 	-o-transition: all .3s ease-out;
 	transition: all .3s ease-out;
+}
+
+/*以下枫枫添加*/
+#container {
+	position: absolute;
+	width: 10%;
+    height: 47px;
+	margin: 10px 50% auto 40%;		
+	box-sizing: border-box;
+}
+/* .bar {background: white;
+box-sizing: border-box;}*/
+.bar input {
+	border: 2px solid #fa8072;
+	border-radius: 5px;
+    background: transparent;
+    top: 0;
+    right: 0;
+	/*下面几个属性是新加的*/
+	font-size: 14px;
+	width: 100%;
+	height: 37px;
+	outline: none;
+	box-sizing: border-box;
+}
+
+.bar button {
+	background: #fa8072;
+    border-radius: 0 5px 5px 0;
+    width: 60px;
+    top: 0;
+	right: 0;
+	/*下面几个属性是新加的*/
+	height: 37px;
+	cursor: pointer;
+    position: absolute;
+	border: none;
+    outline: none;
+	box-sizing: border-box; 
+}
+        
+.bar button:before {
+	content: "GO";
+ 	font-size: 18px;
+    color: white;
+	box-sizing: border-box;
+}
+		
+.bar form {
+	position: relative;
+    width: 350px;
+    margin: 0 auto;
+	box-sizing: border-box;
 }
