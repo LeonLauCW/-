@@ -21,7 +21,7 @@ var modal = (function() {
 				left:left + $window.scrollLeft()         
       		});
     	},
-		open: function(settings) {              
+	open: function(settings) {              
       		$content.empty().append(settings.content);
       		$modal.css({                                
         		width: settings.width || 'auto',          

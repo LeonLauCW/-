@@ -210,13 +210,28 @@ $(function(){
 			$reminder.text('');
 			//selected是一个数组对象 其length属性为数组的长度
 			
-			//-----------------------------------算法by文亮-----------------------------------------
+			//-----------------------------------算法-------------------------------------
 			var last;
 			var index=0;
 			var arrNum=new Array(selected.length);//存地点编号 
 			for(var i=0;i<selected.length;i++)//排除重复编号 并且将点放入地点编号数组
 			{
 				var flag=1;
+				if(selected[i]>27&&selected[i]<31)
+					selected[i]=21;
+				if(selected[i]==31)
+					selected[i]=19;
+				if(selected[i]==32)
+					selected[i]=17;
+				if(selected[i]==33)
+					selected[i]=10;
+				if(selected[i]==34)
+					selected[i]=4;
+				if(selected[i]>34&&selected[i]<40)
+					selected[i]=6
+				if(selected[i]==40)
+					selected[i]=15;
+					
 				for(var k=0;k<index;k++)
 					if(selected[i]==arrNum[k])  //编号  现在不知道 num代替
 					{
@@ -247,18 +262,38 @@ $(function(){
 					arrNum[i]=arrNum[i+1];
 				}
 			console.log(arrNum);//2 3
-			//console.log(last);
+			console.log(ans);
+			console.log(last);
 			while(last>1){//剩余一个终点
 				var CBarr=new Array(last);
+				var flag=0;
 				for(var  i=0;i<last-1;i++)//不计算终点所以-1{
 //					if(arr[currentSize][arrNum[i]]==-1)
 //						CBarr[i]=1<<16;
 //					
-					if(Arr[currentSize][arrNum[i]]!==-1)
+					{
+						console.log(currentSize);
+						console.log(Arr[currentSize][arrNum[i]]);
+					if(Arr[currentSize][arrNum[i]]!==-1){
 						CBarr[i]=arr[currentSize][arrNum[i]]+arr[arrNum[i]][arrNum[last-1]];
-			
+						flag=1;
+					}
+					else
+						CBarr[i]=1<<16;
+				}
+				if(flag==0)
+					{
+						for(var  i=0;i<last-1;i++)//不计算终点所以-1{
+//					if(arr[currentSize][arrNum[i]]==-1)
+//						CBarr[i]=1<<16;
+//					
+					{		
+						CBarr[i]=arr[currentSize][arrNum[i]];
+					}
+				}
 				var min=1<<16;
 				var minindex;
+				console.log("CBarr");
 				console.log(CBarr);
 				for(var i=0;i<last-1;i++)//得出f值最小
 					if(CBarr[i]<min)
@@ -278,9 +313,10 @@ $(function(){
 			
 			ans[ansindex]=arrNum[0];
 			ansindex=ansindex+1;;
+			
 			console.log(ans);
+			//-----------------------------------算法-------------------------------------
 			result = ans;
-			//-----------------------------------算法by文亮-----------------------------------------
 			//通过算法接口返回一个数组之后，依次把路线画出来
 			for(var i = 0; i < result.length-1; i++){
 				$('<li><a href="">' + jsonData[result[i]].name + '-' + jsonData[result[i+1]].name + '</a>' + '<span class="invisible">' + i + '</span>' + '</li>')
